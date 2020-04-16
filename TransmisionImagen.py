@@ -64,8 +64,7 @@ if paridad == 2:
             mensaje_a_enviar.append(mensajeC)
         if num_unos%2 != 0: 
             mensajeC=mensajeC+opcion1
-            mensaje_a_enviar.append(mensajeC)
-print(mensaje_a_enviar[35])               
+            mensaje_a_enviar.append(mensajeC)        
 
 print("_______________RECEPTOR________________")
 time.sleep(3)
@@ -102,9 +101,7 @@ if paridad == 2:
         if i.count("1")%2 == 0:
             mensaje_a_enviar[indice] = i[:-bits_parada]
         indice += 1
-        
-print(mensaje_a_enviar[25])       
-
+          
 if len(mal_transmitidos) != 0:
     print("Es necesario retransmitir los bytes: ")
     print(mal_transmitidos)
