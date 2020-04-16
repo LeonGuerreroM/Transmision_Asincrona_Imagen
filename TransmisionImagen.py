@@ -24,11 +24,9 @@ print("--------------------------------------")
 bits_parada = input()
 bits_parada = int(bits_parada)
 if bits_parada == 1:
-    relleno = 9
     opcion1 = "1"
     opcion0 = "0"
 else:
-    relleno = 10
     opcion1 = "10"
     opcion0 = "00"
 print("--------------------------------------")
@@ -38,14 +36,13 @@ paridad = input()
 paridad = int(paridad)
 print("_____________________________________")
 
-if bits_parada == 1:
 if paridad == 0:
     for i in binarios:
-        mensaje_a_enviar.append(i.zfill(relleno))
+        mensaje_a_enviar.append(i.zfill(9)+opcion0)
 
 if paridad == 1:
     for i in binarios:
-        mensaje.append(i.zfill(relleno))
+        mensaje.append(i.zfill(9))
     for i in mensaje:
         mensajeC = str(i)
         num_unos = mensajeC.count("1")
@@ -58,7 +55,7 @@ if paridad == 1:
 
 if paridad == 2:
     for i in binarios:
-        mensaje.append(i.zfill(relleno))
+        mensaje.append(i.zfill(9))
     for i in mensaje:
         mensajeC = str(i)
         num_unos = mensajeC.count("1")
@@ -68,37 +65,7 @@ if paridad == 2:
         if num_unos%2 != 0: 
             mensajeC=mensajeC+opcion1
             mensaje_a_enviar.append(mensajeC)
-               
-if bits_parada == 2:
-    if paridad == 0:
-        for i in binarios:
-            mensaje_a_enviar.append(i.zfill(10))
-
-    if paridad == 1:
-        for i in binarios:
-            mensaje.append(i.zfill(10))
-        for i in mensaje:
-            mensajeC = str(i)
-            num_unos = mensajeC.count("1")
-            if num_unos%2 == 0:
-                mensajeC=mensajeC+"10"
-                mensaje_a_enviar.append(mensajeC)
-            if num_unos%2 != 0: 
-                mensajeC=mensajeC+"00"
-                mensaje_a_enviar.append(mensajeC)
-    
-    if paridad == 2:
-        for i in binarios:
-            mensaje.append(i.zfill(9))
-        for i in mensaje:
-            mensajeC = str(i)
-            num_unos = mensajeC.count("1")
-            if num_unos%2 == 0:
-                mensajeC=mensajeC+"00"
-                mensaje_a_enviar.append(mensajeC)
-            if num_unos%2 != 0: 
-                mensajeC=mensajeC+"10"
-                mensaje_a_enviar.append(mensajeC)
+print(mensaje_a_enviar[35])               
 
 print("_______________RECEPTOR________________")
 time.sleep(3)
@@ -135,6 +102,8 @@ if paridad == 2:
         if i.count("1")%2 == 0:
             mensaje_a_enviar[indice] = i[:-bits_parada]
         indice += 1
+        
+print(mensaje_a_enviar[25])       
 
 if len(mal_transmitidos) != 0:
     print("Es necesario retransmitir los bytes: ")
