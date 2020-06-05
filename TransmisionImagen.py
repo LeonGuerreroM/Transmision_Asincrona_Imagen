@@ -9,6 +9,9 @@ mensaje = []
 mensaje_a_enviar=[]
 mal_transmitidos = [] #almacena el indice en el arreglo mensaje_a_enviar de aquellos bytes que hayan sido mal transmitidos
 mensaje_recuperado = []
+me_temp = []
+bp_temp = []
+numero_bits_diferentes = []
 discrepancia = 0
 corte = 9
 indiceTrama = 0
@@ -18,15 +21,22 @@ cont = 0
 img  = Image.open("./Lib.jpg")
 with open("./Lib.jpg", "rb") as imagen:
     datos = imagen.read()
+    
+BER = 0.001
+P1 = (1-BER)**8
+P2 = 1-P1
+
+print("Las probabilidades de error calculadas numericamente son:\nPb=0.001\nP2={}".format(P2))
+    
   
 for i in datos:
     binarios.append(bin(i)[2:])
     
-print(binarios[100])
-print("__________________________________________________________________")
-
 for i in datos:
     binPuros.append(bin(i)[2:])
+    binPuros[cont] = binPuros[cont].zfill(8)
+    cont += 1
+
 
 for i in binarios:
     inicial = i.zfill(8)
@@ -47,7 +57,7 @@ for i in binarios:
     cont += 1    
     indiceBinarios += 1
 
-print(binarios[100])
+#print(binarios[100])
 
 print("_______________EMISOR________________")
 print("Elija el numero de bits de parada (1 o 2)")
@@ -98,7 +108,7 @@ if paridad == 2:
             mensaje_a_enviar.append(mensajeC)
         if num_unos%2 != 0: 
             mensajeC=mensajeC+"1"+terminacion
-            mensaje_a_enviar.append(mensajeC)        
+            mensaje_a_enviar.append(mensajeC)    
 
 print("_______________RECEPTOR________________")
 if paridad == 1:
@@ -148,12 +158,28 @@ else:
     indice = 0
     for i in mensaje_a_enviar:
         if int(mensaje_a_enviar[indice], base=2) != int(binPuros[indice], base=2):
+            mal_transmitidos.append(mensaje_a_enviar[indice])
+            me_temp = list(mensaje_a_enviar[indice])
+            bp_temp = list(binPuros[indice])
+            diferencias = 0
+            for i, j in zip(me_temp, bp_temp):
+                if j != i:
+                    diferencias += 1
+            numero_bits_diferentes.append(diferencias)
+            me_temp = []
+            bp_temp = []
+            print("Trama diferente")
+            print("mensaje a enviar tiene {}".format(mensaje_a_enviar[indice]))
+            print("bin puros tiene {}".format(binPuros[indice]))
             discrepancia += 1
-            break
         indice += 1
     if discrepancia == 0:
         print("Mostrando imagen")
         img.show()
         print("Transmision terminada")
     else:
-        print("La imagen no fue bien recibida")
+        print("La imagen no fue bien recibida. Se muestran a continuacion las tramas con bits erroneos")
+        print(mal_transmitidos)
+        print("Y el numero de bits diferentes, respectivamente")
+        print(numero_bits_diferentes)
+        print("La probabilidad calculada P3={}".format(len(mal_transmitidos)/len(mensaje_a_enviar)))
