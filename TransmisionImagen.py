@@ -26,7 +26,8 @@ BER = 0.001
 P1 = (1-BER)**8
 P2 = 1-P1
 
-print("Las probabilidades de error calculadas numericamente son:\nPb=0.001\nP2={}".format(P2))
+
+print("Las probabilidades de error calculadas numericamente son:\nPb=0.001\nProbabilidad errores en la trama={}".format(P2))
     
   
 for i in datos:
@@ -182,4 +183,4 @@ else:
         print(mal_transmitidos)
         print("Y el numero de bits diferentes, respectivamente")
         print(numero_bits_diferentes)
-        print("La probabilidad calculada P3={}".format(len(mal_transmitidos)/len(mensaje_a_enviar)))
+        print("La probabilidad calculada es igual a {}".format(len(mal_transmitidos)/len(mensaje_a_enviar)))
